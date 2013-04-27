@@ -2,9 +2,10 @@ package ld26.component;
 
 class Layer
 {
-	public static var FAR:Int = 50;
-	public static var MIDDLE:Int = 40;
-	public static var NEAR:Int = 30;
+	public static var BACK:Int = 50;
+	public static var ORB:Int = 40;
+	public static var TUBE:Int = 30;
+	public static var CROSSHAIR:Int = 20;
 
 	public var layer:Int;
 

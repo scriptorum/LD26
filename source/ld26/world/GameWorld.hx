@@ -17,6 +17,7 @@ import ld26.service.AnimationService;
 import ld26.system.InputSystem;
 import ld26.system.MovementSystem;
 import ld26.system.RenderingSystem;
+import ld26.system.OrbRotationSystem;
 import ld26.component.Control;
 
 
@@ -61,6 +62,7 @@ class GameWorld extends World
 	{
 		addSystem(new InputSystem(ash, factory)); // Collect player/inventory input
 		addSystem(new MovementSystem(ash, factory)); // Real-time entity movement
+		addSystem(new OrbRotationSystem(ash, factory));
 		addSystem(new RenderingSystem(ash)); // Display entities are created/destroyed/updated
 	}	
 
@@ -83,7 +85,9 @@ class GameWorld extends World
 		factory.addBackground();
 		factory.addFireControl();
 		factory.addOrb(HXP.halfWidth, HXP.halfHeight);
-		factory.addTube();
+		factory.addTube(HXP.halfWidth, HXP.halfHeight);
+		factory.addCrosshair(HXP.halfWidth, HXP.halfHeight);
+		factory.addCrosshair(0,0);
 	}
 
 	override public function update()

@@ -2,8 +2,10 @@ package ld26.render;
 
 import ld26.component.Layer;
 import ld26.component.ScrollFactor;
-import ld26.component.Offset;
+import ld26.component.Origin;
 import ld26.component.Scale;
+import ld26.component.Rotation;
+import ld26.component.Offset;
 import ld26.component.Position;
 
 import ash.core.Entity;
@@ -44,6 +46,12 @@ class View extends com.haxepunk.Entity
 	// If you override this, call super
 	public function nodeUpdate(): Void
 	{
+		if(graphic == null)
+			return;
+
+		// For certain view subclasses
+		var img:com.haxepunk.graphics.Image = Std.is(graphic, com.haxepunk.graphics.Image) ? cast graphic : null;
+
 		// Update layer
 		if(hasComponent(Layer))
 		{
@@ -64,43 +72,68 @@ class View extends com.haxepunk.Entity
 			}
 		}
 
-		// Update scaling
-		var scale = null;		
-		if(hasComponent(Scale))
+		var scale = null;
+		if(img != null)
 		{
-			scale = getComponent(Scale);
-			if(Std.is(graphic, com.haxepunk.graphics.Image))
+			// Update scaling
+			if(hasComponent(Scale))
 			{
-				var img:com.haxepunk.graphics.Image = cast graphic;
+				scale = getComponent(Scale);
 				if(scale.x != img.scaleX || scale.y != img.scaleY)
 				{
 					img.scaleX = scale.x;
 					img.scaleY = scale.y;
 				}
 			}
-		}
 
-		// Update offset
-		if(hasComponent(Offset))
-		{
-			var o = getComponent(Offset);
-			var newOriginX:Int = cast(scale == null ? o.x : o.x * scale.x);
-			var newOriginY:Int = cast(scale == null ? o.y : o.y * scale.y);
-			if(newOriginX != originX || newOriginY != originY)
+			// Update origin
+			if(hasComponent(Origin))
 			{
-				originX = newOriginX;
-				originY = newOriginY;
+				var o = getComponent(Origin);
+				if(o.x != img.originX || o.y != img.originY)
+				{
+					img.originX = cast o.x; // HaxePunk scales origin for us
+					img.originY = cast o.y; // But then they shift the position too! 
+					img.x = cast(scale == null ? o.x : o.x * scale.x); // So calculate the scaled origin
+					img.y = cast(scale == null ? o.y : o.y * scale.y); // And move the position back
+				}
+			}
+			else if(img.originX != 0 || img.originY != 0)
+				img.originX = img.originY = 0;	
+
+			// Update rotation
+			if(hasComponent(Rotation))
+			{
+				if(img != null)
+				{
+					var rotation = getComponent(Rotation);
+					if(rotation.angle != img.angle)
+						img.angle = -rotation.angle; // clockwise, thank you
+				}
 			}
 		}
-		else if(originX != 0 || originY != 0)
-			originX = originY = 0;	
 
 		// Update position
-		var pos = getComponent(Position);
-		if(pos.x != x || pos.y != y)
+		if(hasComponent(Position))
 		{
-			x = pos.x - originX;
-			y = pos.y - originY;
+			// Update offset
+			var offsetX:Float = 0;
+			var offsetY:Float = 0;
+			if(hasComponent(Offset))
+			{
+				var o = getComponent(Offset);
+				offsetX = (scale == null ? o.x : o.x * scale.x);
+				offsetY = (scale == null ? o.y : o.y * scale.y);
+			}
+
+			var pos = getComponent(Position);
+			var newX = pos.x + offsetX;
+			var newY = pos.y + offsetY;
+			if(newX != x || newY != y)
+			{
+				x = newX;
+				y = newY;
+			}
 		}
 	}
 }

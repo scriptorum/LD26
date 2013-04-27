@@ -1,5 +1,10 @@
 package ld26.component;
 
+/*
+ * This changes the center point of the image. It does not change the transformation point! 
+ * To do that, use Origin.
+ */
+
 class Offset
 {
 	public var x:Float;

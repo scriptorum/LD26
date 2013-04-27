@@ -15,10 +15,13 @@ import ld26.component.Scale;
 import ld26.component.Image;
 import ld26.component.Layer;
 import ld26.component.Offset;
+import ld26.component.Origin;
 import ld26.component.Position;
+import ld26.component.Rotation;
 import ld26.component.Repeating;
 import ld26.component.ScrollFactor;
 import ld26.component.Tile;
+import ld26.component.Identity;
 
 class EntityService
 {
@@ -51,6 +54,14 @@ class EntityService
 		return add(e);
 	}
 
+	public function addBackground(): Entity
+	{
+		var e = new Entity();
+		e.add(new Layer(Layer.BACK));
+		e.add(new Image("art/background.png"));
+		return addTo(e, 0, 0);
+	}
+
 	public function addFireControl(): Entity
 	{
 		var e = resolveEntity(CONTROL);
@@ -58,31 +69,41 @@ class EntityService
 		return add(e);
 	}
 
-	public function addOrb(x:Float, y:Float): Entity
+	public function addCrosshair(x:Float, y:Float): Entity
 	{
-		var subdivision = new Subdivision(2, 1, new Size(128, 128));
 		var e = new Entity();
-		e.add(new Layer(Layer.MIDDLE));
-		e.add(new Image("art/orb.png"));
-		e.add(new Tile(subdivision, 0));
-		e.add(new Offset(64, 64)); // set registration/transformation point, this is based on the full size image
-		e.add(new Scale(0.5, 0.5));
+		e.add(new Layer(Layer.CROSSHAIR));
+		e.add(new Image("art/crosshair.png"));
+		e.add(new Offset(-8, -8));
 		return addTo(e, x, y);
 	}
 
-	public function addTube(): Entity
+	public function addOrb(x:Float, y:Float): Entity
 	{
-		var e = new Entity();
-		e.add(new Layer(Layer.MIDDLE));
-		e.add(new Image("art/tube.png"));
-		return add(e);
+		var subdivision = new Subdivision(2, 1, new Size(128, 128));
+		var e = new Entity("orb");
+		e.add(new Layer(Layer.ORB));
+		e.add(new Image("art/orb.png"));
+		e.add(new Tile(subdivision, 0));
+		e.add(new Offset(-64, -64));
+		e.add(new Scale(0.5, 0.5));
+		e.add(new Origin(64, 64));
+		e.add(new OrbId());
+		e.add(new TubeId());
+		e.add(new Rotation(0));
+		return addTo(e, x, y);
 	}
 
-	public function addBackground(): Entity
+	public function addTube(x:Float, y:Float): Entity
 	{
-		var e = new Entity();
-		e.add(new Layer(Layer.FAR));
-		e.add(new Image("art/background.png"));
-		return addTo(e, 0, 0);
+		var e = new Entity("tube");
+		e.add(new Layer(Layer.TUBE));
+		e.add(new Image("art/tube.png"));
+		e.add(new Offset(64, -4));
+		e.add(new Scale(0.5, 0.5));
+		e.add(new Rotation(45));
+		e.add(new Origin(-64, 4));
+		e.add(new TubeId());
+		return addTo(e, x, y);
 	}
 }
