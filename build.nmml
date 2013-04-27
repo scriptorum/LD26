@@ -1,0 +1,34 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    <app title="Mass Splitter" file="MassSplitter" main="ld26.Main" version="1.0.0" company="Eric W. Lund" />
+    <app swf-version="11.2"/>
+
+    <assets path="assets/art" rename="art" type="image" include="*.png" />
+    <assets path="assets/audio" rename="audio" type="sound" include="*.wav|*.mp3" />
+    <assets path="assets/font" rename="font" type="font" include="*.ttf" />
+    <icon  path="assets/art/icon.svg" />
+
+    <window width="600" height="600" orientation="landscape" background="0x000000" resizable="false" />
+
+    <set name="BUILD_DIR" value="export" /> 
+    <classpath name="source" />
+
+    <haxelib name="nme" />
+    <haxelib name="HaxePunk" />
+    <haxelib name="ash" />
+
+    <section if="debug">
+        <assets path="assets/debug" rename="gfx" include="*.png|*.jpg" />
+    </section>
+    <assets path="assets/preloader" rename="gfx" include="*.png|*.jpg" />
+
+    <haxedef name="profiler"/> 
+
+    <!-- 
+    <haxedef name="debug"/> 
+    <haxelib name="hxcpp" />
+    <haxedef name="DEBUGGER" />
+    -->
+</project>
+

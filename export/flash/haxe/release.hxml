@@ -1,0 +1,14 @@
+-main ApplicationMain 
+-lib nme
+-lib HaxePunk
+-lib ash
+-cp source
+-cp /usr/lib/haxe/lib/nme/3,5,5/
+-cp /usr/lib/haxe/lib/HaxePunk/custom172a/
+-D profiler
+-D nme_install_tool
+-D web
+-swf-version 11.2
+-swf9 export/flash/bin/MassSplitter.swf
+-swf-header 600:600:30:0
+-cp export/flash/haxe
