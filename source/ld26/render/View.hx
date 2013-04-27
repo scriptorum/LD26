@@ -3,6 +3,7 @@ package ld26.render;
 import ld26.component.Layer;
 import ld26.component.ScrollFactor;
 import ld26.component.Offset;
+import ld26.component.Scale;
 import ld26.component.Position;
 
 import ash.core.Entity;
@@ -63,14 +64,32 @@ class View extends com.haxepunk.Entity
 			}
 		}
 
+		// Update scaling
+		var scale = null;		
+		if(hasComponent(Scale))
+		{
+			scale = getComponent(Scale);
+			if(Std.is(graphic, com.haxepunk.graphics.Image))
+			{
+				var img:com.haxepunk.graphics.Image = cast graphic;
+				if(scale.x != img.scaleX || scale.y != img.scaleY)
+				{
+					img.scaleX = scale.x;
+					img.scaleY = scale.y;
+				}
+			}
+		}
+
 		// Update offset
 		if(hasComponent(Offset))
 		{
 			var o = getComponent(Offset);
-			if(o.x != originX || o.y != originY)
+			var newOriginX:Int = cast(scale == null ? o.x : o.x * scale.x);
+			var newOriginY:Int = cast(scale == null ? o.y : o.y * scale.y);
+			if(newOriginX != originX || newOriginY != originY)
 			{
-				originX = cast o.x;
-				originY = cast o.y;
+				originX = newOriginX;
+				originY = newOriginY;
 			}
 		}
 		else if(originX != 0 || originY != 0)

@@ -1,16 +1,16 @@
 package ld26.render;
 
+import nme.geom.Rectangle;
+
 import ld26.component.Tile;
 import ld26.component.Image;
-import nme.geom.Rectangle;
 
 class ImageView extends View
 {
 	private var tile:Tile;
 	private var image:Image;
+	private var display:com.haxepunk.graphics.Image.Image;
 	private var clip:Rectangle;
-	private var gx:Int;
-	private var gy:Int;
 
 	override public function begin()
 	{
@@ -21,13 +21,13 @@ class ImageView extends View
 	{
 		tile = getComponent(Tile);
 		image = getComponent(Image);
-		graphic = new com.haxepunk.graphics.Image(image.path, tile.rect());
+		graphic = display = new com.haxepunk.graphics.Image(image.path, tile.rect());
 	}
 
 	private function setImage()
 	{
 		image = getComponent(Image);
-		graphic = new com.haxepunk.graphics.Image(image.path, image.clip);
+		graphic = display = new com.haxepunk.graphics.Image(image.path, image.clip);
 		clip = image.clip;
 	}
 

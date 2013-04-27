@@ -2,11 +2,13 @@ package ld26.render;
 
 import com.haxepunk.HXP;
 import com.haxepunk.graphics.Spritemap;
+
 import ld26.component.Animation;
 
 class AnimationView extends View
 {
-	private var animation:Animation = null;
+	private var animation:Animation;
+	private var spritemap:Spritemap;
 
 	override public function begin()
 	{
@@ -23,7 +25,7 @@ class AnimationView extends View
 		}
 
 		var cbFunc:CallbackFunction = (animation.looping ? null : animationFinished);
-		var spritemap = new Spritemap(HXP.getBitmap(animation.image.path),
+		spritemap = new Spritemap(HXP.getBitmap(animation.image.path),
 			Std.int(animation.subdivision.plot.width), 
 			Std.int(animation.subdivision.plot.height), 
 			cbFunc);
@@ -40,7 +42,7 @@ class AnimationView extends View
 	override public function nodeUpdate()
 	{
 		super.nodeUpdate();
-		
+
 		// Change/update animation
 		var curAnim = getComponent(Animation);
 		if(curAnim != animation)

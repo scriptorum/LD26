@@ -11,6 +11,7 @@ import ld26.component.Display;
 import ld26.component.Grid;
 import ld26.component.Subdivision;
 import ld26.component.Size;
+import ld26.component.Scale;
 import ld26.component.Image;
 import ld26.component.Layer;
 import ld26.component.Offset;
@@ -64,7 +65,8 @@ class EntityService
 		e.add(new Layer(Layer.MIDDLE));
 		e.add(new Image("art/orb.png"));
 		e.add(new Tile(subdivision, 0));
-		e.add(new Offset(64, 64));
+		e.add(new Offset(64, 64)); // set registration/transformation point, this is based on the full size image
+		e.add(new Scale(0.5, 0.5));
 		return addTo(e, x, y);
 	}
 
