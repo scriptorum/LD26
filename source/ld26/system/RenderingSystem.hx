@@ -11,6 +11,7 @@ import ld26.render.ImageView;
 import ld26.render.AnimationView;
 import ld26.render.BackdropView;
 import ld26.render.GridView;
+import ld26.render.TextView;
 import ld26.render.View;
 
 import ld26.node.ViewNode;
@@ -42,6 +43,7 @@ class RenderingSystem extends System
 		updateViews(GridNode, GridView);
 		updateViews(ImageNode, ImageView);
 		updateViews(AnimationNode, AnimationView);
+		updateViews(TextNode, TextView);
 	}
 
 	private function updateViews<TNode:Node<TNode>>(nodeClass:Class<TNode>, viewClass:Class<View>)

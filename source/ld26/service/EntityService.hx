@@ -19,8 +19,10 @@ import ld26.component.Origin;
 import ld26.component.Position;
 import ld26.component.Rotation;
 import ld26.component.Repeating;
+import ld26.component.Firework;
 import ld26.component.ScrollFactor;
 import ld26.component.Tile;
+import ld26.component.Text;
 import ld26.component.Tube;
 import ld26.component.Orb;
 
@@ -118,5 +120,31 @@ class EntityService
 		e.add(new Tube(orb));
 		e.add(new Position(0,0));
 		return e;
+	}
+
+	public function addFirework(x:Float, y:Float, amount:Float): Entity
+	{
+		var subdivision = new Subdivision(2, 1, new Size(128, 128));
+		var e = makeEntity("firework");
+		e.add(new Layer(Layer.FIREWORK));
+		e.add(new Image("art/firework.png"));
+		e.add(new Tile(subdivision, 1));
+		e.add(new Offset(-64, -64));
+		e.add(new Firework(amount));		
+		addFireworkText(addTo(e,x,y));
+		return e;
+	}
+
+	public function addFireworkText(firework:Entity): Entity
+	{
+		var e = makeEntity("text");
+		e.add(new Layer(Layer.FIREWORK_TEXT));
+		// var str:String = Std.string(Math.floor(firework.get(Firework).amount));
+		var str = "??";
+		var style = new TextStyle(0xFF0000, 20, "font/vademecu.ttf");
+		e.add(new Text(str, style));
+		var pos = firework.get(Position);
+		e.add(new Offset(-10, -15));
+		return addTo(e, pos.x, pos.y);
 	}
 }

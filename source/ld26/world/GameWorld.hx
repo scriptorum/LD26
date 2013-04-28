@@ -93,8 +93,12 @@ class GameWorld extends World
 		var orb = factory.addOrb(HXP.halfWidth, HXP.halfHeight, 100);
 		factory.addTube(orb);
 		factory.addOrb(HXP.halfWidth / 2, HXP.halfHeight, 25);
-		factory.addCrosshair(HXP.halfWidth, HXP.halfHeight);
-		factory.addCrosshair(0,0);
+		// factory.addCrosshair(HXP.halfWidth, HXP.halfHeight);
+		// factory.addCrosshair(0,0);
+
+		factory.addFirework(180, 180, 60);
+		factory.addFirework(350, 480, 40);
+		factory.addFirework(64, 500, 20);
 	}
 
 	override public function update()

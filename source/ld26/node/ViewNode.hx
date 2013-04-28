@@ -6,6 +6,7 @@ import ld26.component.Image;
 import ld26.component.Animation;
 import ld26.component.Position;
 import ld26.component.Grid;
+import ld26.component.Text;
 import ld26.component.Tile;
 import ld26.component.Subdivision;
 
@@ -33,4 +34,10 @@ class GridNode extends Node<GridNode>
 	public var grid:Grid;
 	public var image:Image;
 	public var subdivision:Subdivision;
+}
+
+class TextNode extends Node<TextNode>
+{
+	public var position:Position;
+	public var text:Text;
 }
