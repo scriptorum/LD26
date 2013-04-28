@@ -16,6 +16,8 @@ import ld26.service.EntityService;
  */
 class OrbRotationSystem extends System
 {
+	public static var DEGREES_PER_SECOND:Float = 240.0; // Keep this value synched with FiringSystem
+	
 	public var factory:EntityService;
 	public var engine:Engine;
 
@@ -30,7 +32,7 @@ class OrbRotationSystem extends System
 	{
 	 	for(node in engine.getNodeList(TubeNode))
 	 	{
-	 		node.rotation.angle += (time * 240.0);
+	 		node.rotation.angle += (time * DEGREES_PER_SECOND);
 	 		if(node.rotation.angle > 360)
 	 			node.rotation.angle %= 360;
 	 	}

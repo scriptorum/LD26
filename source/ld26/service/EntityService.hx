@@ -28,10 +28,17 @@ class EntityService
 	public static inline var CONTROL:String = "control";
 
 	public var ash:Engine;
+	public var nextId:Int = 0;
 
 	public function new(ash:Engine)
 	{
 		this.ash = ash;
+	}
+
+	public function makeEntity(prefix:String): Entity
+	{
+		var name = prefix + nextId++;
+		return new Entity(name);
 	}
 
 	public function resolveEntity(name:String): Entity
@@ -71,7 +78,7 @@ class EntityService
 
 	public function addCrosshair(x:Float, y:Float): Entity
 	{
-		var e = new Entity();
+		var e = makeEntity("crosshair");
 		e.add(new Layer(Layer.CROSSHAIR));
 		e.add(new Image("art/crosshair.png"));
 		e.add(new Offset(-8, -8));
@@ -81,29 +88,30 @@ class EntityService
 	public function addOrb(x:Float, y:Float): Entity
 	{
 		var subdivision = new Subdivision(2, 1, new Size(128, 128));
-		var e = new Entity("orb");
+		var e = makeEntity("orb");
 		e.add(new Layer(Layer.ORB));
 		e.add(new Image("art/orb.png"));
 		e.add(new Tile(subdivision, 0));
 		e.add(new Offset(-64, -64));
 		e.add(new Scale(0.5, 0.5));
-		e.add(new Origin(64, 64));
 		e.add(new OrbId());
-		e.add(new TubeId());
-		e.add(new Rotation(0));
+		// e.add(new Origin(64, 64));
+		// e.add(new TubeId());
+		// e.add(new Rotation(0));
 		return addTo(e, x, y);
 	}
 
-	public function addTube(x:Float, y:Float): Entity
+	public function addTube(orb:Entity): Entity
 	{
-		var e = new Entity("tube");
+		var e = resolveEntity("tube");
 		e.add(new Layer(Layer.TUBE));
 		e.add(new Image("art/tube.png"));
 		e.add(new Offset(64, -4));
-		e.add(new Scale(0.5, 0.5));
-		e.add(new Rotation(45));
+		e.add(orb.get(Scale));
+		e.add(new Rotation(0));
 		e.add(new Origin(-64, 4));
 		e.add(new TubeId());
-		return addTo(e, x, y);
+		var pos = orb.get(Position);
+		return addTo(e, pos.x, pos.y);
 	}
 }
