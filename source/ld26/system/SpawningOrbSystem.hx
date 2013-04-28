@@ -9,9 +9,11 @@ import ld26.node.FiringNode;
 import ld26.component.Orb;
 import ld26.component.Tube;
 import ld26.component.Scale;
+import ld26.component.Position;
 
 class SpawningOrbSystem extends System
 {
+	public static var SIZE_TO_PIXELS:Float = 0.5;
 	public var factory:EntityService;
 	public var engine:Engine;
 
@@ -27,21 +29,30 @@ class SpawningOrbSystem extends System
 		for(node in engine.getNodeList(FiringNode))
 		{
 			// Find the spawning orb 
-			var orb = node.firing.spawningOrb;
-			if(orb == null)
+			var orbEnt = node.firing.spawningOrb;
+			if(orbEnt == null)
 				continue;
+			var orb = orbEnt.get(Orb);
 
 			// Find the orb this growing orb is paired with
-			var sourceOrb = node.tube.orb;
-
-			// Determine how much orb size leach
-			var leach = node.firing.leachSpeed * time;
+			var srcOrbEnt = node.tube.orb;
+			var srcOrb = srcOrbEnt.get(Orb);
 
 			// Leach from the firing orb to the spawning orb
-			orb.get(Orb).add(leach);
-			sourceOrb.get(Orb).add(-leach);
-			// trace("Source " + sourceOrb.name + " of size " + sourceOrb.get(Orb).size + " leaching " + leach + " to " + 
-			// 	orb.name + " of size " + orb.get(Orb).size);
+			var leach = node.firing.leachSpeed * time;
+			orb.add(leach);
+			srcOrb.add(-leach);
+
+			// Now adjust the position of the spawning orb to match the tube's true location
+			var srcPos:Position = srcOrbEnt.get(Position);
+			var pos:Position = new Position(srcPos.x, srcPos.y);
+			var totalSize = orb.size + srcOrb.size;
+			var radius = totalSize * SIZE_TO_PIXELS;
+			var angle = node.rotation.angle * Math.PI / 180; // deg to rad
+			pos.x += radius * Math.cos(angle);
+			pos.y += radius * Math.sin(angle);
+			
+			orbEnt.add(pos);
 		}
 	}
 }
