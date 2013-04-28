@@ -16,6 +16,7 @@ import ld26.component.Image;
 import ld26.component.Layer;
 import ld26.component.Offset;
 import ld26.component.Origin;
+import ld26.component.Parent;
 import ld26.component.Position;
 import ld26.component.Rotation;
 import ld26.component.Repeating;
@@ -143,6 +144,7 @@ class EntityService
 		var str = "??";
 		var style = new TextStyle(0xFF0000, 20, "font/vademecu.ttf");
 		e.add(new Text(str, style));
+		e.add(new Parent(firework));
 		var pos = firework.get(Position);
 		e.add(new Offset(-10, -15));
 		return addTo(e, pos.x, pos.y);
