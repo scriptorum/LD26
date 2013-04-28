@@ -5,10 +5,13 @@ import ash.core.System;
 
 import ld26.node.TubeNode;
 import ld26.service.EntityService;
+import ld26.component.Position;
+import ld26.component.Orb;
 
-class TubeRotationSystem extends System
+class TubeTransformationSystem extends System
 {
 	public static var DEGREES_PER_SECOND:Float = 240.0; // Keep this value synched with FiringSystem
+	public static var SIZE_TO_PIXELS:Float = 0.3;
 
 	public var factory:EntityService;
 	public var engine:Engine;
@@ -27,6 +30,14 @@ class TubeRotationSystem extends System
 	 		node.rotation.angle += (time * DEGREES_PER_SECOND);
 	 		if(node.rotation.angle > 360)
 	 			node.rotation.angle %= 360;
+
+	 		var mainOrbEnt = node.tube.orb;
+	 		var mainOrbPos = mainOrbEnt.get(Position);
+			var radius = mainOrbEnt.get(Orb).size * SIZE_TO_PIXELS;
+			var angle = node.rotation.angle * Math.PI / 180; // deg to rad
+			
+			node.position.x	= mainOrbPos.x + radius * Math.cos(angle);
+			node.position.y	= mainOrbPos.y + radius * Math.sin(angle);
 	 	}
 	}
 }

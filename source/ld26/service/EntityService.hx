@@ -104,12 +104,11 @@ class EntityService
 		var e = resolveEntity("tube");
 		e.add(new Layer(Layer.TUBE));
 		e.add(new Image("art/tube.png"));
-		e.add(new Offset(64, -4));
-		e.add(orb.get(Scale));
+		e.add(new Offset(0, -4));
+		//e.add(orb.get(Scale));
 		e.add(new Rotation(0));
-		e.add(new Origin(-64, 4));
+		e.add(new Origin(0, 4));
 		e.add(new Tube(orb));
-		e.add(orb.get(Position));
-		return add(e);
+		return addTo(e, 0, 0);
 	}
 }

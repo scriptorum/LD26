@@ -41,18 +41,17 @@ class FiringSystem extends System
 	 	for(node in engine.getNodeList(FiringNode))
 	 	{
 	 		// Force fire after max time
+	 		var now = nme.Lib.getTimer();
+	 		var elapsed = now - node.firing.start;
 	 		if(node.firing.end == 0)
 	 		{
-		 		var now = nme.Lib.getTimer();
-		 		if((now - node.firing.start) >= MAX_FIRE_MS)
+		 		if(elapsed >= MAX_FIRE_MS)
 		 			node.firing.end = node.firing.start + MAX_FIRE_MS;
-		 		else if(node.firing.spawningOrb == null)
-		 			spawnNewOrb(node);
 	 		}
 	
 	 		if(node.firing.end != 0)
 	 		{
-	 			var elapsed = node.firing.end - node.firing.start;
+	 			elapsed = node.firing.end - node.firing.start;
 				node.entity.remove(Firing); 					
 	 			if(elapsed < MIN_FIRE_MS)
  					selectNextOrb(node);
@@ -60,6 +59,8 @@ class FiringSystem extends System
  				else
  					fireOrb(node);
 	 		}
+	 		else if(node.firing.spawningOrb == null && elapsed >= MIN_FIRE_MS)
+		 			spawnNewOrb(node);
 	 	}
 	}
 
@@ -70,36 +71,32 @@ class FiringSystem extends System
 
 	public function spawnNewOrb(node:FiringNode)
 	{
-		// var pos = node.tube.orb.get(Position);
-		// var spawning = factory.addOrb(pos.x, pos.y, 0);
-		var spawning = factory.addOrb(50, 50, 0);
-		node.firing.spawningOrb = spawning;
+		var spawningEnt = factory.addOrb(0, 0, 0); // position and scale will be set by a later system
+		node.firing.spawningOrb = spawningEnt;
 		node.firing.leachSpeed = node.tube.orb.get(Orb).size * 1000 / MAX_FIRE_MS;
+		trace("Spawning! New orb is " + spawningEnt.name);
 	}
 
 	public function selectNextOrb(tubeNode:FiringNode)
 	{
 		var currentOrb = tubeNode.tube.orb;
-		var nextOrb:Entity = null;
+		var nextOrbEnt:Entity = null;
 		var useNextOrb:Bool = false;
 		var cnt = 0;
 		for(orbNode in engine.getNodeList(OrbNode))
 		{
-			if(nextOrb == null)
-				nextOrb = orbNode.entity;
+			if(nextOrbEnt == null)
+				nextOrbEnt = orbNode.entity;
 			if(useNextOrb)
 			{
-				nextOrb = orbNode.entity;
+				nextOrbEnt = orbNode.entity;
 				break;
 			}
 			if(orbNode.entity == currentOrb)
 				useNextOrb = true;
 		}
-		tubeNode.tube.orb = nextOrb;
-
-		// The tube should match the position and scale of the orb
-		tubeNode.entity.add(nextOrb.get(Position));
-		tubeNode.entity.add(nextOrb.get(Scale));
+		tubeNode.tube.orb = nextOrbEnt;
+		trace("Selecting! Next orb is " + nextOrbEnt.name);
 	}
 
 }

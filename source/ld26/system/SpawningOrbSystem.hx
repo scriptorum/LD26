@@ -8,12 +8,13 @@ import ld26.service.EntityService;
 import ld26.node.FiringNode;
 import ld26.component.Orb;
 import ld26.component.Tube;
-import ld26.component.Scale;
 import ld26.component.Position;
 
 class SpawningOrbSystem extends System
 {
-	public static var SIZE_TO_PIXELS:Float = 0.5;
+	public static var TUBE_SIZE:Float = 32;
+	public static var SIZE_TO_PIXELS:Float = 0.28;
+
 	public var factory:EntityService;
 	public var engine:Engine;
 
@@ -47,7 +48,7 @@ class SpawningOrbSystem extends System
 			var srcPos:Position = srcOrbEnt.get(Position);
 			var pos:Position = new Position(srcPos.x, srcPos.y);
 			var totalSize = orb.size + srcOrb.size;
-			var radius = totalSize * SIZE_TO_PIXELS;
+			var radius = TUBE_SIZE + totalSize * SIZE_TO_PIXELS;
 			var angle = node.rotation.angle * Math.PI / 180; // deg to rad
 			pos.x += radius * Math.cos(angle);
 			pos.y += radius * Math.sin(angle);

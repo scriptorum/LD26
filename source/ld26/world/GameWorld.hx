@@ -19,7 +19,7 @@ import ld26.system.MovementSystem;
 import ld26.system.FiringSystem;
 import ld26.system.RenderingSystem;
 import ld26.system.OrbSizingSystem;
-import ld26.system.TubeRotationSystem;
+import ld26.system.TubeTransformationSystem;
 import ld26.system.SpawningOrbSystem;
 import ld26.component.Control;
 
@@ -64,9 +64,9 @@ class GameWorld extends World
 	private function initSystems()
 	{
 		addSystem(new InputSystem(ash, factory)); // Collect player/inventory input
-		addSystem(new MovementSystem(ash, factory)); // Real-time entity movement
+		// addSystem(new MovementSystem(ash, factory)); // Real-time entity movement
 		addSystem(new FiringSystem(ash, factory));
-		addSystem(new TubeRotationSystem(ash, factory));
+		addSystem(new TubeTransformationSystem(ash, factory));
 		addSystem(new SpawningOrbSystem(ash, factory));
 		addSystem(new OrbSizingSystem(ash, factory));
 		addSystem(new RenderingSystem(ash)); // Display entities are created/destroyed/updated
