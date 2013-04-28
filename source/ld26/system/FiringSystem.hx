@@ -5,9 +5,13 @@ package ld26.system;
 
 import ash.core.Engine;
 import ash.core.System;
+import ash.core.Entity;
 
 import ld26.node.FiringNode;
+import ld26.node.OrbNode;
 import ld26.component.Firing;
+import ld26.component.Position;
+import ld26.component.Scale;
 import ld26.service.EntityService;
 
 /*
@@ -47,9 +51,8 @@ class FiringSystem extends System
 	 			var elapsed = node.firing.end - node.firing.start;
 				node.entity.remove(Firing); 					
 	 			if(elapsed < MIN_FIRE_MS)
- 				{
- 					trace("Switch active orb! Elapsed:" + elapsed);
- 				}
+ 					selectNextOrb(node);
+
  				else
  				{
  					trace("Firing! Elapsed:" + elapsed);
@@ -57,4 +60,30 @@ class FiringSystem extends System
 	 		}
 	 	}
 	}
+
+	public function selectNextOrb(tubeNode:FiringNode)
+	{
+		var currentOrb = tubeNode.tube.orb;
+		var nextOrb:Entity = null;
+		var useNextOrb:Bool = false;
+		var cnt = 0;
+		for(orbNode in engine.getNodeList(OrbNode))
+		{
+			if(nextOrb == null)
+				nextOrb = orbNode.entity;
+			if(useNextOrb)
+			{
+				nextOrb = orbNode.entity;
+				break;
+			}
+			if(orbNode.entity == currentOrb)
+				useNextOrb = true;
+		}
+		tubeNode.tube.orb = nextOrb;
+
+		// Match position and scale
+		tubeNode.entity.add(nextOrb.get(Position));
+		tubeNode.entity.add(nextOrb.get(Scale));
+	}
+
 }

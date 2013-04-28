@@ -21,7 +21,8 @@ import ld26.component.Rotation;
 import ld26.component.Repeating;
 import ld26.component.ScrollFactor;
 import ld26.component.Tile;
-import ld26.component.Identity;
+import ld26.component.Tube;
+import ld26.component.Orb;
 
 class EntityService
 {
@@ -94,10 +95,7 @@ class EntityService
 		e.add(new Tile(subdivision, 0));
 		e.add(new Offset(-64, -64));
 		e.add(new Scale(0.5, 0.5));
-		e.add(new OrbId());
-		// e.add(new Origin(64, 64));
-		// e.add(new TubeId());
-		// e.add(new Rotation(0));
+		e.add(new Orb());
 		return addTo(e, x, y);
 	}
 
@@ -110,7 +108,7 @@ class EntityService
 		e.add(orb.get(Scale));
 		e.add(new Rotation(0));
 		e.add(new Origin(-64, 4));
-		e.add(new TubeId());
+		e.add(new Tube(orb));
 		var pos = orb.get(Position);
 		return addTo(e, pos.x, pos.y);
 	}
