@@ -86,7 +86,7 @@ class EntityService
 		return addTo(e, x, y);
 	}
 
-	public function addOrb(x:Float, y:Float): Entity
+	public function addOrb(x:Float, y:Float, size:Float): Entity
 	{
 		var subdivision = new Subdivision(2, 1, new Size(128, 128));
 		var e = makeEntity("orb");
@@ -94,8 +94,8 @@ class EntityService
 		e.add(new Image("art/orb.png"));
 		e.add(new Tile(subdivision, 0));
 		e.add(new Offset(-64, -64));
-		e.add(new Scale(0.5, 0.5));
-		e.add(new Orb());
+		e.add(new Scale(1, 1));
+		e.add(new Orb(size));
 		return addTo(e, x, y);
 	}
 
@@ -109,7 +109,7 @@ class EntityService
 		e.add(new Rotation(0));
 		e.add(new Origin(-64, 4));
 		e.add(new Tube(orb));
-		var pos = orb.get(Position);
-		return addTo(e, pos.x, pos.y);
+		e.add(orb.get(Position));
+		return add(e);
 	}
 }

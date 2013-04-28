@@ -81,7 +81,7 @@ class FiringSystem extends System
 		}
 		tubeNode.tube.orb = nextOrb;
 
-		// Match position and scale
+		// The tube should match the position and scale of the orb
 		tubeNode.entity.add(nextOrb.get(Position));
 		tubeNode.entity.add(nextOrb.get(Scale));
 	}

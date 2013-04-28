@@ -73,6 +73,7 @@ class View extends com.haxepunk.Entity
 		}
 
 		var scale = null;
+		var scaleChanged = false;
 		if(img != null)
 		{
 			// Update scaling
@@ -83,6 +84,7 @@ class View extends com.haxepunk.Entity
 				{
 					img.scaleX = scale.x;
 					img.scaleY = scale.y;
+					scaleChanged = true;
 				}
 			}
 
@@ -90,7 +92,7 @@ class View extends com.haxepunk.Entity
 			if(hasComponent(Origin))
 			{
 				var o = getComponent(Origin);
-				if(o.x != img.originX || o.y != img.originY)
+				if(o.x != img.originX || o.y != img.originY || scaleChanged)
 				{
 					img.originX = cast o.x; // HaxePunk scales origin for us
 					img.originY = cast o.y; // But then they shift the position too! 
@@ -127,12 +129,12 @@ class View extends com.haxepunk.Entity
 			}
 
 			var pos = getComponent(Position);
-			var newX = pos.x + offsetX;
-			var newY = pos.y + offsetY;
-			if(newX != x || newY != y)
+			var newx = pos.x + offsetX;
+			var newy = pos.y + offsetY;
+			if(newx != x || newy != y)
 			{
-				x = newX;
-				y = newY;
+				x = newx;
+				y = newy;
 			}
 		}
 	}
