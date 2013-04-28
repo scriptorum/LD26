@@ -42,12 +42,13 @@ class EntityService
 		return new Entity(name);
 	}
 
+	// Finds or makes a named entity
 	public function resolveEntity(name:String): Entity
 	{
 		var e = ash.getEntityByName(name);
-		if(e == null)
-			e = new Entity(name);
-		return e;
+		if(e != null)
+			return e;
+		return add(new Entity(name));
 	}
 
 	public function add(entity:Entity): Entity
@@ -74,7 +75,14 @@ class EntityService
 	{
 		var e = resolveEntity(CONTROL);
 		e.add(new FireControl());
-		return add(e);
+		return e;
+	}
+
+	public function removeFireControl(): Entity
+	{
+		var e = resolveEntity(CONTROL);
+		e.remove(FireControl);
+		return e;
 	}
 
 	public function addCrosshair(x:Float, y:Float): Entity
@@ -105,10 +113,10 @@ class EntityService
 		e.add(new Layer(Layer.TUBE));
 		e.add(new Image("art/tube.png"));
 		e.add(new Offset(0, -4));
-		//e.add(orb.get(Scale));
 		e.add(new Rotation(0));
 		e.add(new Origin(0, 4));
 		e.add(new Tube(orb));
-		return addTo(e, 0, 0);
+		e.add(new Position(0,0));
+		return e;
 	}
 }

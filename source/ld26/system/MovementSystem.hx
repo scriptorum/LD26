@@ -18,12 +18,12 @@ class MovementSystem extends System
 		this.factory = factory;
 	}
 
-	override public function update(_)
+	override public function update(time:Float)
 	{
 	 	for(node in engine.getNodeList(MovementNode))
 	 	{
-	 		node.position.x += node.velocity.x;
-	 		node.position.y += node.velocity.y;
+	 		node.position.x += node.velocity.x * time;
+	 		node.position.y += node.velocity.y * time;
 	 	}
 	}
 }

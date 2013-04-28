@@ -5,7 +5,7 @@ class Orb
 	public static var MIN_SIZE:Float = 40;
 
 	public var size:Float;
-	public var changed:Bool = true;
+	public var changed:Bool = true; // If size changed
 
 	public function new(size:Float = 100)
 	{

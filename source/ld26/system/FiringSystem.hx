@@ -14,6 +14,8 @@ import ld26.component.Position;
 import ld26.component.Tube;
 import ld26.component.Orb;
 import ld26.component.Scale;
+import ld26.component.Friction;
+import ld26.component.Velocity;
 import ld26.service.EntityService;
 
 /*
@@ -25,6 +27,8 @@ class FiringSystem extends System
 {
 	public static var MAX_FIRE_MS:Int = 1500;
 	public static var MIN_FIRE_MS:Int = 200;
+	public static var MAX_ORB_SIZE:Int = 100;
+	public static var MIN_ORB_SIZE:Int = 20;
 
 	public var factory:EntityService;
 	public var engine:Engine;
@@ -67,6 +71,26 @@ class FiringSystem extends System
 	public function fireOrb(node:FiringNode)
 	{
 		trace("Firing!");
+		var orbEnt = node.firing.spawningOrb;
+		if(orbEnt == null)
+		{
+			trace("Firing, but spawning orb not set");
+			return;			
+		}
+
+		factory.removeFireControl();
+		var orb = orbEnt.get(Orb);
+		// var thrust = orb.size;
+		// TODO Calculate thrust amount, smaller = more thrust!		
+		var thrust = (MAX_ORB_SIZE - orb.size) / (MAX_ORB_SIZE - MIN_ORB_SIZE) * 400;
+
+		var angle = node.rotation.angle * Math.PI / 180; // deg to rad
+		var velocity = new Velocity(thrust * Math.cos(angle), thrust * Math.sin(angle));
+		trace("Fire Velocity:" + velocity.x + "," + velocity.y + " thrust:" + thrust + " angle:" + angle + " orbSize:" + orb.size);
+		orbEnt.add(new Friction(.1));
+		orbEnt.add(velocity);
+		// orbEnt.add(new Velocity(thrust, 0));
+		// orbEnt.add(new Position(com.haxepunk.HXP.halfWidth, com.haxepunk.HXP.halfHeight));
 	}
 
 	public function spawnNewOrb(node:FiringNode)
