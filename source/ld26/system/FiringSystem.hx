@@ -70,7 +70,7 @@ class FiringSystem extends System
 
 	public function fireOrb(node:FiringNode)
 	{
-		trace("Firing!");
+		// trace("Firing!");
 		var orbEnt = node.firing.spawningOrb;
 		if(orbEnt == null)
 		{
@@ -79,18 +79,14 @@ class FiringSystem extends System
 		}
 
 		factory.removeFireControl();
+		// TODO charging up sound effect
+			
 		var orb = orbEnt.get(Orb);
-		// var thrust = orb.size;
-		// TODO Calculate thrust amount, smaller = more thrust!		
 		var thrust = (MAX_ORB_SIZE - orb.size) / (MAX_ORB_SIZE - MIN_ORB_SIZE) * 400;
-
 		var angle = node.rotation.angle * Math.PI / 180; // deg to rad
-		var velocity = new Velocity(thrust * Math.cos(angle), thrust * Math.sin(angle));
-		trace("Fire Velocity:" + velocity.x + "," + velocity.y + " thrust:" + thrust + " angle:" + angle + " orbSize:" + orb.size);
-		orbEnt.add(new Friction(.1));
+		var velocity = new Velocity(thrust * Math.cos(angle), thrust * Math.sin(angle));		
 		orbEnt.add(velocity);
-		// orbEnt.add(new Velocity(thrust, 0));
-		// orbEnt.add(new Position(com.haxepunk.HXP.halfWidth, com.haxepunk.HXP.halfHeight));
+		orbEnt.add(new Friction(.1));
 	}
 
 	public function spawnNewOrb(node:FiringNode)
@@ -98,7 +94,7 @@ class FiringSystem extends System
 		var spawningEnt = factory.addOrb(0, 0, 0); // position and scale will be set by a later system
 		node.firing.spawningOrb = spawningEnt;
 		node.firing.leachSpeed = node.tube.orb.get(Orb).size * 1000 / MAX_FIRE_MS;
-		trace("Spawning! New orb is " + spawningEnt.name);
+		// trace("Spawning! New orb is " + spawningEnt.name);
 	}
 
 	public function selectNextOrb(tubeNode:FiringNode)

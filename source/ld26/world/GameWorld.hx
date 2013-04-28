@@ -1,5 +1,3 @@
-/*
-*/
 
 package ld26.world;
 
