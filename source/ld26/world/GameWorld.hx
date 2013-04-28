@@ -20,6 +20,7 @@ import ld26.system.OrbSizingSystem;
 import ld26.system.TubeTransformationSystem;
 import ld26.system.SpawningOrbSystem;
 import ld26.system.TextUpdatingSystem;
+import ld26.system.FireworkFeedingSystem;
 import ld26.system.OrbFrictionSystem;
 import ld26.component.Control;
 
@@ -70,6 +71,7 @@ class GameWorld extends World
 		addSystem(new OrbSizingSystem(ash, factory));
 		addSystem(new MovementSystem(ash, factory)); // Real-time entity movement
 		addSystem(new OrbFrictionSystem(ash, factory));
+		addSystem(new FireworkFeedingSystem(ash, factory));
 		addSystem(new TextUpdatingSystem(ash, factory));
 		addSystem(new RenderingSystem(ash)); // Display entities are created/destroyed/updated
 	}	
@@ -92,9 +94,8 @@ class GameWorld extends World
 	{
 		factory.addBackground();
 		factory.addFireControl();
-		var orb = factory.addOrb(HXP.halfWidth, HXP.halfHeight, 100);
+		var orb = factory.addOrb(HXP.halfWidth, HXP.halfHeight, 200);
 		factory.addTube(orb);
-		factory.addOrb(HXP.halfWidth / 2, HXP.halfHeight, 25);
 		// factory.addCrosshair(HXP.halfWidth, HXP.halfHeight);
 		// factory.addCrosshair(0,0);
 

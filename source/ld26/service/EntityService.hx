@@ -17,6 +17,7 @@ import ld26.component.Layer;
 import ld26.component.Offset;
 import ld26.component.Origin;
 import ld26.component.Parent;
+import ld26.component.Radius;
 import ld26.component.Position;
 import ld26.component.Rotation;
 import ld26.component.Repeating;
@@ -125,14 +126,17 @@ class EntityService
 
 	public function addFirework(x:Float, y:Float, amount:Float): Entity
 	{
-		var subdivision = new Subdivision(2, 1, new Size(128, 128));
+		var size = new Size(128, 128);
+		var subdivision = new Subdivision(2, 1, size);
 		var e = makeEntity("firework");
 		e.add(new Layer(Layer.FIREWORK));
 		e.add(new Image("art/firework.png"));
 		e.add(new Tile(subdivision, 1));
 		e.add(new Offset(-64, -64));
-		e.add(new Firework(amount));		
-		addFireworkText(addTo(e,x,y));
+		e.add(new Firework(amount));
+		e.add(new Radius(64));
+		var child = addFireworkText(addTo(e,x,y));
+		e.add(new Child(child));
 		return e;
 	}
 

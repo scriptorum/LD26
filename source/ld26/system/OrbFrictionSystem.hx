@@ -11,6 +11,8 @@ import ld26.component.Velocity;
 
 class OrbFrictionSystem extends System
 {
+	public static var MIN_SPEED:Float = 4.0;
+
 	public var factory:EntityService;
 	public var engine:Engine;
 
@@ -26,7 +28,7 @@ class OrbFrictionSystem extends System
 	 	for(node in engine.getNodeList(OrbFrictionNode))
 	 	{
 	 		// Stop
-	 		if(Math.abs(node.velocity.x) < 1 && Math.abs(node.velocity.y) < 1)
+	 		if(Math.abs(node.velocity.x) < MIN_SPEED && Math.abs(node.velocity.y) < MIN_SPEED)
 	 		{
 	 			factory.addFireControl();
 	 			node.entity.remove(Velocity);
