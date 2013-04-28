@@ -19,7 +19,8 @@ import ld26.system.MovementSystem;
 import ld26.system.FiringSystem;
 import ld26.system.RenderingSystem;
 import ld26.system.OrbSizingSystem;
-import ld26.system.OrbRotationSystem;
+import ld26.system.TubeRotationSystem;
+import ld26.system.SpawningOrbSystem;
 import ld26.component.Control;
 
 
@@ -65,8 +66,9 @@ class GameWorld extends World
 		addSystem(new InputSystem(ash, factory)); // Collect player/inventory input
 		addSystem(new MovementSystem(ash, factory)); // Real-time entity movement
 		addSystem(new FiringSystem(ash, factory));
+		addSystem(new TubeRotationSystem(ash, factory));
+		addSystem(new SpawningOrbSystem(ash, factory));
 		addSystem(new OrbSizingSystem(ash, factory));
-		addSystem(new OrbRotationSystem(ash, factory));
 		addSystem(new RenderingSystem(ash)); // Display entities are created/destroyed/updated
 	}	
 
@@ -88,9 +90,9 @@ class GameWorld extends World
 	{
 		factory.addBackground();
 		factory.addFireControl();
-		var orb = factory.addOrb(HXP.halfWidth / 2, HXP.halfHeight, 25);
+		var orb = factory.addOrb(HXP.halfWidth, HXP.halfHeight, 100);
 		factory.addTube(orb);
-		factory.addOrb(HXP.halfWidth, HXP.halfHeight, 100);
+		factory.addOrb(HXP.halfWidth / 2, HXP.halfHeight, 25);
 		factory.addCrosshair(HXP.halfWidth, HXP.halfHeight);
 		factory.addCrosshair(0,0);
 	}

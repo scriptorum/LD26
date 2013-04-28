@@ -6,7 +6,7 @@ import ash.core.System;
 import ld26.node.TubeNode;
 import ld26.service.EntityService;
 
-class OrbRotationSystem extends System
+class TubeRotationSystem extends System
 {
 	public static var DEGREES_PER_SECOND:Float = 240.0; // Keep this value synched with FiringSystem
 

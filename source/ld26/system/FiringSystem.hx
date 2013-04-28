@@ -11,6 +11,8 @@ import ld26.node.FiringNode;
 import ld26.node.OrbNode;
 import ld26.component.Firing;
 import ld26.component.Position;
+import ld26.component.Tube;
+import ld26.component.Orb;
 import ld26.component.Scale;
 import ld26.service.EntityService;
 
@@ -44,6 +46,8 @@ class FiringSystem extends System
 		 		var now = nme.Lib.getTimer();
 		 		if((now - node.firing.start) >= MAX_FIRE_MS)
 		 			node.firing.end = node.firing.start + MAX_FIRE_MS;
+		 		else if(node.firing.spawningOrb == null)
+		 			spawnNewOrb(node);
 	 		}
 	
 	 		if(node.firing.end != 0)
@@ -54,11 +58,23 @@ class FiringSystem extends System
  					selectNextOrb(node);
 
  				else
- 				{
- 					trace("Firing! Elapsed:" + elapsed);
- 				}
+ 					fireOrb(node);
 	 		}
 	 	}
+	}
+
+	public function fireOrb(node:FiringNode)
+	{
+		trace("Firing!");
+	}
+
+	public function spawnNewOrb(node:FiringNode)
+	{
+		// var pos = node.tube.orb.get(Position);
+		// var spawning = factory.addOrb(pos.x, pos.y, 0);
+		var spawning = factory.addOrb(50, 50, 0);
+		node.firing.spawningOrb = spawning;
+		node.firing.leachSpeed = node.tube.orb.get(Orb).size * 1000 / MAX_FIRE_MS;
 	}
 
 	public function selectNextOrb(tubeNode:FiringNode)

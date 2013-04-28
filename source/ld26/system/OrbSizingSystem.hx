@@ -30,7 +30,7 @@ class OrbSizingSystem extends System
 	 	for(node in engine.getNodeList(OrbNode))
 	 	{
 	 		if(!node.orb.changed)
-	 			return;
+	 			continue;
 
 	 		node.orb.changed = false;
 	 		var size:Float = node.orb.size / 200;
@@ -38,11 +38,9 @@ class OrbSizingSystem extends System
 	 		var scale = node.entity.get(Scale);
 	 		scale.x = scale.y = size;
 
+	 		// Make sure tube gets updated scale from the active orb
 	 		if(node.entity == curOrb)
-	 		{
-				trace("Copying scale to current orb");	 			
 	 			tube.add(scale);
-	 		}
 	 	}
 	}
 }

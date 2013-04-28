@@ -2,18 +2,24 @@ package ld26.component;
 
 class Orb
 {
-	public var size(default, set_size):Float;
+	public static var MIN_SIZE:Float = 40;
+
+	public var size:Float;
 	public var changed:Bool = true;
 
-	public function new(newSize:Float = 256)
+	public function new(size:Float = 100)
 	{
-		this.size = newSize;
+		this.size = size;
 	}
 
-	public function set_size(size:Float): Float
+	public function change(size:Float)
 	{
 		this.size = size;
 		this.changed = true;
-		return this.size;
+	}
+
+	public function add(size:Float)
+	{
+		change(this.size + size);
 	}
 }
