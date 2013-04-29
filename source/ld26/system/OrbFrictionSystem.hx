@@ -33,7 +33,6 @@ class OrbFrictionSystem extends System
 	 			factory.addFireControl();
 	 			node.entity.remove(Velocity);
 	 			node.entity.remove(Friction);
-		 		trace("STOP");
 	 		}
 
 	 		// Decrease velocity

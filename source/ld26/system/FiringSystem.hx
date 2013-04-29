@@ -122,7 +122,7 @@ class FiringSystem extends System
 				useNextOrb = true;
 		}
 		tubeNode.tube.orb = nextOrbEnt;
-		trace("Selecting! Next orb is " + nextOrbEnt.name);
+		// trace("Selecting! Next orb is " + nextOrbEnt.name);
 	}
 
 }

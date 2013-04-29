@@ -102,6 +102,7 @@ class GameWorld extends World
 		factory.addFireControl();
 		var orb = factory.addOrb(HXP.halfWidth, HXP.halfHeight, 200);
 		factory.addTube(orb);
+
 		// factory.addCrosshair(HXP.halfWidth, HXP.halfHeight);
 		// factory.addCrosshair(0,0);
 
