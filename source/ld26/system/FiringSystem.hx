@@ -28,7 +28,7 @@ class FiringSystem extends System
 {
 	public static var MAX_FIRE_MS:Int = 1500;
 	public static var MIN_FIRE_MS:Int = 200;
-	public static var MAX_ORB_SIZE:Int = 100;
+	public static var MAX_ORB_SIZE:Int = 200;
 	public static var MIN_ORB_SIZE:Int = 20;
 
 	public var factory:EntityService;
@@ -85,6 +85,9 @@ class FiringSystem extends System
 		var thrust = (MAX_ORB_SIZE - orb.size) / (MAX_ORB_SIZE - MIN_ORB_SIZE) * 400;
 		var angle = node.rotation.angle * Math.PI / 180; // deg to rad
 		var velocity = new Velocity(thrust * Math.cos(angle), thrust * Math.sin(angle));		
+	
+		trace("Orb size:" + orb.size);
+
 		orbEnt.add(velocity);
 		orbEnt.add(new Friction(.1));
 
