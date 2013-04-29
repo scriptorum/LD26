@@ -34,6 +34,7 @@ class InputSystem extends System
 			handleProfileControl();
 		#end
 
+		handleRestart();
 		handleFireControl();
 	}
 
@@ -51,6 +52,16 @@ class InputSystem extends System
 	 	}
 	}
 #end
+
+	public function handleRestart()
+	{
+ 		if(InputService.lastKey() == Key.R)
+ 		{
+ 			InputService.clearLastKey();
+ 			factory.startNewGame();
+ 		}
+	}
+
 
 	public function handleFireControl()
 	{

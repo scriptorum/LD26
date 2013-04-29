@@ -48,7 +48,10 @@ class OrbDeathSystem extends System
 	 			SoundService.play(SoundService.ORBDEATH);
 
 	 			if(tube.get(Tube).orb == node.entity)
-	 				tube.add(new Tube(null));
+	 			{
+					// trace("Trying to remove old tube's orb");	 				
+	 				tube.add(new Tube(ld26.system.FiringSystem.selectOrb(engine, tube.get(Tube))));
+	 			}
 	 		}
 	 	}
 	}

@@ -26,6 +26,7 @@ import ld26.system.TextUpdatingSystem;
 import ld26.system.FireworkFeedingSystem;
 import ld26.system.OrbFrictionSystem;
 import ld26.system.OrbDeathSystem;
+import ld26.system.RestartSystem;
 import ld26.component.Control;
 
 
@@ -58,19 +59,12 @@ class GameWorld extends World
 		SoundService.init();
 
 		initSystems();
-		initEntities();
-
-		#if profiler
-			var e = new Entity();
-			e.add(new ProfileControl());
-			ash.addEntity(e);
-		#end
-
-		SoundService.play(SoundService.START);
+		factory.startNewGame();
 	}
 
 	private function initSystems()
 	{
+		addSystem(new RestartSystem(ash, factory));
 		addSystem(new InputSystem(ash, factory)); // Collect player/inventory input
 		addSystem(new FiringSystem(ash, factory));
 		addSystem(new TubeTransformationSystem(ash, factory));
@@ -97,21 +91,6 @@ class GameWorld extends World
     		ash.addSystem(new ProfileSystem(name, false), nextSystemPriority++);
     	#end
     }
-
-	private function initEntities()
-	{
-		factory.addBackground();
-		factory.addFireControl();
-		var orb = factory.addOrb(HXP.halfWidth, HXP.halfHeight, 200);
-		factory.addTube(orb);
-
-		// factory.addCrosshair(HXP.halfWidth, HXP.halfHeight);
-		// factory.addCrosshair(0,0);
-
-		factory.addFirework(180, 180, 60);
-		factory.addFirework(350, 480, 40);
-		factory.addFirework(64, 500, 20);
-	}
 
 	override public function update()
 	{

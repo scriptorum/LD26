@@ -153,4 +153,9 @@ class EntityService
 		e.add(new Offset(-10, -15));
 		return addTo(e, pos.x, pos.y);
 	}
+
+	public function startNewGame(): Void
+	{
+		resolveEntity("restart");
+	}
 }

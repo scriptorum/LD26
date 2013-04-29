@@ -30,7 +30,7 @@ class OrbFrictionSystem extends System
 	 		// Stop
 	 		if(Math.abs(node.velocity.x) < MIN_SPEED && Math.abs(node.velocity.y) < MIN_SPEED)
 	 		{
-	 			factory.addFireControl();
+	 			// factory.addFireControl();
 	 			node.entity.remove(Velocity);
 	 			node.entity.remove(Friction);
 	 		}

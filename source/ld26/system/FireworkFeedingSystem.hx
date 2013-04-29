@@ -69,7 +69,9 @@ class FireworkFeedingSystem extends System
 	 				if(orbNode.orb.size <= 0) 
 	 				{
 		 				engine.removeEntity(orbNode.entity);
-		 				factory.addFireControl();
+		 				// tube.add(new Tube(ld26.system.FiringSystem.selectOrb(engine, tube.get(Tube))));
+
+		 				// factory.addFireControl();
 	 				}
 		 		}
 

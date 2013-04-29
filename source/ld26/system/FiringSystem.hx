@@ -79,7 +79,7 @@ class FiringSystem extends System
 			return;			
 		}
 
-		factory.removeFireControl(); // TODO Remove later...
+		// factory.removeFireControl(); 
 			
 		var orb = orbEnt.get(Orb);
 		var thrust = (MAX_ORB_SIZE - orb.size) / (MAX_ORB_SIZE - MIN_ORB_SIZE) * 400;
