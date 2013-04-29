@@ -86,7 +86,7 @@ class FiringSystem extends System
 		var angle = node.rotation.angle * Math.PI / 180; // deg to rad
 		var velocity = new Velocity(thrust * Math.cos(angle), thrust * Math.sin(angle));		
 	
-		trace("Orb size:" + orb.size);
+		//trace("Orb size:" + orb.size);
 
 		orbEnt.add(velocity);
 		orbEnt.add(new Friction(.1));
