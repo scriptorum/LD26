@@ -7,6 +7,7 @@ import ld26.node.TubeNode;
 import ld26.service.EntityService;
 import ld26.component.Position;
 import ld26.component.Orb;
+import ld26.component.Invisible;
 
 class TubeTransformationSystem extends System
 {
@@ -32,10 +33,27 @@ class TubeTransformationSystem extends System
 	 			node.rotation.angle %= 360;
 
 	 		var mainOrbEnt = node.tube.orb;
+
+	 		if(mainOrbEnt == null)
+	 		{
+	 			if(node.entity.has(Invisible))
+	 			{
+		 			var selected = ld26.system.FiringSystem.selectOrb(engine, node.tube);
+		 			if(selected == null)
+		 				continue;
+		 			else node.entity.remove(Invisible);
+	 			}
+	 			else 
+	 			{
+	 				node.entity.add(Invisible);
+	 				continue;
+	 			}
+	 		}
+
 	 		var mainOrbPos = mainOrbEnt.get(Position);
 			var radius = mainOrbEnt.get(Orb).size * SIZE_TO_PIXELS;
 			var angle = node.rotation.angle * Math.PI / 180; // deg to rad
-			
+
 			node.position.x	= mainOrbPos.x + radius * Math.cos(angle);
 			node.position.y	= mainOrbPos.y + radius * Math.sin(angle);
 	 	}

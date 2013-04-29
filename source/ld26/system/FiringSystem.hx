@@ -79,8 +79,7 @@ class FiringSystem extends System
 			return;			
 		}
 
-		factory.removeFireControl();
-		// TODO charging up sound effect
+		factory.removeFireControl(); // TODO Remove later...
 			
 		var orb = orbEnt.get(Orb);
 		var thrust = (MAX_ORB_SIZE - orb.size) / (MAX_ORB_SIZE - MIN_ORB_SIZE) * 400;
@@ -88,6 +87,15 @@ class FiringSystem extends System
 		var velocity = new Velocity(thrust * Math.cos(angle), thrust * Math.sin(angle));		
 		orbEnt.add(velocity);
 		orbEnt.add(new Friction(.1));
+
+		// if main orb is 0, eliminate it
+ 		var tube = engine.getEntityByName("tube").get(Tube);
+		if(tube.orb.get(Orb).size <= 0)
+		{			
+	 		tube.orb.remove();
+	 		tube.orb = null;
+	 		selectNextOrb(node);
+		}
 
 		SoundService.stopAll();
 		SoundService.play(SoundService.FIRE);
@@ -105,9 +113,14 @@ class FiringSystem extends System
 
 	public function selectNextOrb(tubeNode:FiringNode)
 	{
-		var currentOrb = tubeNode.tube.orb;
+		selectOrb(engine, tubeNode.tube);
+	}
+
+	public static function selectOrb(engine:Engine, tube:Tube): Entity
+	{
+		var currentOrb:Entity = tube.orb;
 		var nextOrbEnt:Entity = null;
-		var useNextOrb:Bool = false;
+		var useNextOrb:Bool = (currentOrb == null);
 		var cnt = 0;
 		for(orbNode in engine.getNodeList(OrbNode))
 		{
@@ -121,7 +134,8 @@ class FiringSystem extends System
 			if(orbNode.entity == currentOrb)
 				useNextOrb = true;
 		}
-		tubeNode.tube.orb = nextOrbEnt;
+		tube.orb = nextOrbEnt;
+		return tube.orb;
 		// trace("Selecting! Next orb is " + nextOrbEnt.name);
 	}
 

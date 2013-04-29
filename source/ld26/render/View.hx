@@ -7,6 +7,7 @@ import ld26.component.Scale;
 import ld26.component.Rotation;
 import ld26.component.Offset;
 import ld26.component.Position;
+import ld26.component.Invisible;
 
 import ash.core.Entity;
 
@@ -47,6 +48,10 @@ class View extends com.haxepunk.Entity
 	public function nodeUpdate(): Void
 	{
 		if(graphic == null)
+			return;
+
+		visible = !hasComponent(Invisible);
+		if(!visible)
 			return;
 
 		// For certain view subclasses

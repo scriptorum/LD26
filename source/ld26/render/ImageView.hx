@@ -33,8 +33,6 @@ class ImageView extends View
 
 	override public function nodeUpdate()
 	{
-		super.nodeUpdate();
-
 		// Image with Tile
 		if(hasComponent(Tile))
 		{
@@ -49,5 +47,7 @@ class ImageView extends View
 			if(this.image != nextImage || nextImage.clip != this.clip)
 				setImage();
 		}
+
+		super.nodeUpdate();
 	}
 }

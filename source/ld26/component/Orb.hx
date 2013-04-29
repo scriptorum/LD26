@@ -2,7 +2,7 @@ package ld26.component;
 
 class Orb
 {
-	public static var MIN_SIZE:Float = 40;
+	public static var MIN_SIZE:Float = 20;
 
 	public var size:Float;
 	public var changed:Bool = true; // If size changed

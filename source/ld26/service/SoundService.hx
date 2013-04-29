@@ -13,6 +13,7 @@ class SoundService extends Input
 	public static inline var START:String = "start.wav";
 	public static inline var CHARGE:String = "charge.wav";
 	public static inline var SATISFIED:String = "satisfied.wav";
+	public static inline var ORBDEATH:String = "orbdeath.wav";
 
 	private static var playing:Array<SoundChannel>;
 
