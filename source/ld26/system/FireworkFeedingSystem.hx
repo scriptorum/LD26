@@ -7,11 +7,13 @@ import ash.core.Node;
 
 import nme.geom.Point;
 
+import ld26.service.SoundService;
 import ld26.service.EntityService;
 import ld26.node.MovingOrbNode;
 import ld26.node.FireworkNode;
 import ld26.component.Tile;
 import ld26.component.Parent;
+import ld26.component.Firework;
 
 class FireworkFeedingSystem extends System
 {
@@ -29,7 +31,7 @@ class FireworkFeedingSystem extends System
 	{
 	 	for(orbNode in engine.getNodeList(MovingOrbNode))
 	 	{
-	 		var orbRadius = orbNode.orb.size / 2;
+	 		var orbRadius = 0;//orbNode.orb.size / 2;
 	 		var orbPt = new Point(orbNode.position.x, orbNode.position.y);
 
 		 	for(fwNode in engine.getNodeList(FireworkNode))
@@ -52,13 +54,17 @@ class FireworkFeedingSystem extends System
 		 			{
 		 				var tile = fwNode.entity.get(Tile);
 		 				fwNode.entity.add(new Tile(tile.subdivision, 0));
+		 				fwNode.entity.remove(Firework);
 
 		 				if(fwNode.entity.has(Child))
 		 				{
 		 					engine.removeEntity(fwNode.entity.get(Child).entity);
 		 					fwNode.entity.remove(Child);
 		 				}
+
+	 					SoundService.play(SoundService.SATISFIED);
 		 			}
+		 			else SoundService.play(SoundService.EATEN);
 
 	 				if(orbNode.orb.size <= 0) 
 	 				{

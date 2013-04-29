@@ -17,6 +17,7 @@ import ld26.component.Scale;
 import ld26.component.Friction;
 import ld26.component.Velocity;
 import ld26.service.EntityService;
+import ld26.service.SoundService;
 
 /*
  * Anything with a GridPosition and a GridVelocity will be touched by this turn-based system.
@@ -87,10 +88,15 @@ class FiringSystem extends System
 		var velocity = new Velocity(thrust * Math.cos(angle), thrust * Math.sin(angle));		
 		orbEnt.add(velocity);
 		orbEnt.add(new Friction(.1));
+
+		SoundService.stopAll();
+		SoundService.play(SoundService.FIRE);
 	}
 
 	public function spawnNewOrb(node:FiringNode)
 	{
+		SoundService.playRepeat(SoundService.CHARGE);
+
 		var spawningEnt = factory.addOrb(0, 0, 0); // position and scale will be set by a later system
 		node.firing.spawningOrb = spawningEnt;
 		node.firing.leachSpeed = node.tube.orb.get(Orb).size * 1000 / MAX_FIRE_MS;

@@ -1,3 +1,6 @@
+/*
+   - First orb fires backward if fired "fully" hrm
+ */
 
 package ld26.world;
 
@@ -51,6 +54,7 @@ class GameWorld extends World
 		#end
 
 		AnimationService.init();
+		SoundService.init();
 
 		initSystems();
 		initEntities();
@@ -60,6 +64,8 @@ class GameWorld extends World
 			e.add(new ProfileControl());
 			ash.addEntity(e);
 		#end
+
+		SoundService.play(SoundService.START);
 	}
 
 	private function initSystems()

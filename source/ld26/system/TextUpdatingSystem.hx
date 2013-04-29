@@ -35,7 +35,7 @@ class TextUpdatingSystem extends System
 	 		if(node.parent.entity.has(Firework))
 	 		{
 	 			var amount = node.parent.entity.get(Firework).amount;
-	 			node.text.message = Std.string(Math.floor(amount));
+	 			node.text.message = Std.string(Math.ceil(amount));
 	 		}
 	 	}
 	}
